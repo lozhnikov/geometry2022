@@ -219,7 +219,7 @@ cmake -D CMAKE_CXX_COMPILER=clang++ ../
 
 Кроме того, в Jupyter можно использовать `cpplint`. Для этого из корня репозитория нужно запустить следующую команду:
 ```
-cpplint --recursive --filter="-legal/copyright,-build/c++11,-build/c++14" --exclude=*/.ipynb_checkpoints/* methods/ tests/ include/
+cpplint --recursive --filter="-legal/copyright,-build/c++11,-build/c++14,-build/include_subdir" --exclude=*/.ipynb_checkpoints/* methods/ tests/ include/
 ```
 
 На некоторых системах cmake может сгенерировать файлы для другой системы сборки (не GNU Make). Тогда его нужно
