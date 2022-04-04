@@ -29,7 +29,7 @@ jobs:
     displayName: 'Install build dependencies'
 
   - script: |
-      cpplint --recursive --filter="-legal/copyright,-build/c++11,-build/c++14" methods/ tests/ include/
+      cpplint --recursive --filter="-legal/copyright,-build/c++11,-build/c++14,-build/include_subdir" methods/ tests/ include/
     displayName: 'Run linter'
 
 
