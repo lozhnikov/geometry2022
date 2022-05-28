@@ -11,6 +11,7 @@
 #include <iostream>
 #include <list>
 #include <utility>
+#include <vector>
 #include <edge.hpp>
 #include "axis_parallel_edge.h"
 #include "dictionary.h"
@@ -19,23 +20,26 @@
 
 namespace geometry {
 
-template <typename T> void Sort(T *arr, int size, int (*cmp)(T, T));
+template <typename T> void Sort(T *arr, size_t size, int (*cmp)(T, T));
 
 template <typename T>
 int AxisParallelEdgeCmp(AxisParallelEdge<T> *a, AxisParallelEdge<T> *b);
 
-template <typename T> AxisParallelEdge<T> **BuildSchedule(Rectangle<T>, int);
+template <typename T> AxisParallelEdge<T> **BuildSchedule(Rectangle<T>, size_t);
 
 template <typename T>
-std::list<Edge<T> *> *ContourRectangles(Rectangle<T> r[], size_t n) {
-  AxisParallelEdge<T> **schedule = BuildSchedule(r, n);
+std::list<Edge<T> *> *ContourRectangles(Rectangle<T> r[], int n) {
+  AxisParallelEdge<T> **schedule = BuildSchedule(r, static_cast<size_t>(n));
   std::list<Edge<T> *> *segments = new std::list<Edge<T> *>;
-  Dictionary<AxisParallelEdge<T> *> sweepline(AxisParallelEdgeCmp<T>);
-  Rectangle<T> *sentinel = new Rectangle<T>(Point<T>((T)(-T_MAX), (T)(-T_MAX)),
-                                            Point<T>((T)T_MAX, (T)T_MAX), -1);
-  sweepline.insert(new AxisParallelEdge<T>(sentinel, Side::BOTTOM_SIDE));
+  std::vector<AxisParallelEdge<T> *> _arr;
+  Dictionary<AxisParallelEdge<T> *> sweepline(AxisParallelEdgeCmp<T>, _arr);
+  Rectangle<T> *sentinel = new Rectangle<T>(Point<T>(AxisParallelEdge<T>::T_MIN,
+                                                    AxisParallelEdge<T>::T_MIN),
+                                            Point<T>(AxisParallelEdge<T>::T_MAX,
+                                               AxisParallelEdge<T>::T_MAX), -1);
+  sweepline.Insert(new AxisParallelEdge<T>(sentinel, Side::BOTTOM_SIDE));
 
-  for (int i = 0; i < 2 * n; i++)
+  for (size_t i = 0; i < static_cast<size_t>(2 * n); i++)
     switch (schedule[i]->type) {
     case Side::LEFT_SIDE:
       schedule[i]->HandleLeftEdge(&sweepline, segments);
@@ -43,15 +47,20 @@ std::list<Edge<T> *> *ContourRectangles(Rectangle<T> r[], size_t n) {
     case Side::RIGHT_SIDE:
       schedule[i]->HandleRightEdge(&sweepline, segments);
       break;
+    case Side::BOTTOM_SIDE:
+    case Side::TOP_SIDE:
     default:
       break;
     }
 
   delete sentinel;
-  for (int i = 0; i < 2 * n; i++) {
-    delete[] schedule[i];
+  for (size_t i = 0; i < static_cast<size_t>(2 * n); i++) {
+    delete schedule[i];
   }
   delete[] schedule;
+  for (size_t i = 0; i < static_cast<size_t>(sweepline.size); i++) {
+    delete sweepline.arr[i];
+  }
   /*for (auto iter = segments->begin(); iter != segments->end(); iter++)
   {
     std::cout << (*iter)->Origin().X() << " " << (*iter)->Origin().Y() << " ";
@@ -63,9 +72,9 @@ std::list<Edge<T> *> *ContourRectangles(Rectangle<T> r[], size_t n) {
 }
 
 template <typename T>
-AxisParallelEdge<T> **BuildSchedule(Rectangle<T> r[], int n) {
+AxisParallelEdge<T> **BuildSchedule(Rectangle<T> r[], size_t n) {
   AxisParallelEdge<T> **schedule = new AxisParallelEdge<T> *[2 * n];
-  for (int i = 0; i < n; i++) {
+  for (size_t i = 0; i < n; i++) {
     schedule[2 * i] = new AxisParallelEdge<T>(&r[i], Side::LEFT_SIDE);
     schedule[2 * i + 1] = new AxisParallelEdge<T>(&r[i], Side::RIGHT_SIDE);
   }
@@ -75,9 +84,9 @@ AxisParallelEdge<T> **BuildSchedule(Rectangle<T> r[], int n) {
 
 template <typename T>
 int AxisParallelEdgeCmp(AxisParallelEdge<T> *a, AxisParallelEdge<T> *b) {
-  if (a->pos() < b->pos())
+  if (a->Pos() < b->Pos())
     return -1;
-  else if (a->pos() > b->pos())
+  else if (a->Pos() > b->Pos())
     return 1;
   else if (a->type < b->type)
     return -1;
@@ -90,9 +99,9 @@ int AxisParallelEdgeCmp(AxisParallelEdge<T> *a, AxisParallelEdge<T> *b) {
   return 0;
 }
 
-template <typename T> void Sort(T *arr, int size, int (*cmp)(T, T)) {
-  for (int i = 0; i < size - 1; i++)
-    for (int j = 0; j < size - 1; j++)
+template <typename T> void Sort(T *arr, size_t size, int (*cmp)(T, T)) {
+  for (size_t i = 0; i < size - 1; i++)
+    for (size_t j = 0; j < size - 1; j++)
       if (cmp(arr[j], arr[j + 1]) > 0)
         std::swap(arr[j], arr[j + 1]);
 }
@@ -100,3 +109,4 @@ template <typename T> void Sort(T *arr, int size, int (*cmp)(T, T)) {
 }  // namespace geometry
 
 #endif  // INCLUDE_CONTOUR_RECTANGLES_HPP_
+

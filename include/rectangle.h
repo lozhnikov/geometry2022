@@ -23,7 +23,17 @@ class Rectangle{
   Rectangle(const Point<T>& _sw, const Point<T>& _ne, int _id = -1):
   sw(_sw), ne(_ne), id(_id)
   {}
-  Rectangle(){}
+  Rectangle(const Rectangle &obj) {
+    sw = obj.sw; ne = obj.ne; id = obj.id;
+  }
+  Rectangle():
+  sw(Point<T>(0, 0)), ne(Point<T>(0, 0)), id(-1)
+  {}
+  ~Rectangle() {}
+  Rectangle& operator=(const Rectangle& obj) {
+    sw = obj.sw; ne = obj.ne; id = obj.id;
+    return *this;
+  }
 };
 
 }  // namespace geometry

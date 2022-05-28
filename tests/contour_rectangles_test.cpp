@@ -13,6 +13,8 @@
 #include "test.hpp"
 #include "test_core.hpp"
 
+#define NUM_TRIES_FOR_RANDOM_TEST 10
+
 static void IntSimpleTest(httplib::Client *cli);
 static void FloatSimpleTest(httplib::Client *cli);
 static void RandomTest(httplib::Client *cli);
@@ -22,6 +24,7 @@ static void RandomIntegerHelperTest(httplib::Client *cli, std::string type);
 template <typename T>
 static void RandomFloatingPointHelperTest(httplib::Client *cli,
                                           std::string type);
+
 
 void TestContourRectangles(httplib::Client *cli) {
   TestSuite suite("TestContourRectangles");
@@ -105,7 +108,7 @@ static void RandomTest(httplib::Client *cli) {
 template <typename T>
 static void RandomIntegerHelperTest(httplib::Client *cli, std::string type) {
   // Число попыток.
-  const int numTries = 10;
+  const int numTries = NUM_TRIES_FOR_RANDOM_TEST;
   // Используется для инициализации генератора случайных чисел.
   std::random_device rd;
   // Генератор случайных чисел.
@@ -154,12 +157,10 @@ static void RandomIntegerHelperTest(httplib::Client *cli, std::string type) {
       }
     }
     // std::cout << input.dump() << '\n';
-    /* Отправляем данные на сервер POST запросом. */
+    // Отправляем данные на сервер POST запросом.
     httplib::Result res =
         cli->Post("/ContourRectangles", input.dump(), "application/json");
 
-    /* Используем метод parse() для преобразования строки ответа сервера
-    (res->body) в объект JSON. */
     nlohmann::json output = nlohmann::json::parse(res->body);
 
     REQUIRE_EQUAL(it, output["id"]);
@@ -172,7 +173,7 @@ template <typename T>
 static void RandomFloatingPointHelperTest(httplib::Client *cli,
                                           std::string type) {
   // Число попыток.
-  const int numTries = 10;
+  const int numTries = NUM_TRIES_FOR_RANDOM_TEST;
   // Относительная точность сравнения.
   const T eps = std::numeric_limits<T>::epsilon() * T(1e4);
   // Используется для инициализации генератора случайных чисел.
@@ -224,7 +225,6 @@ static void RandomFloatingPointHelperTest(httplib::Client *cli,
       }
     }
 
-    /* Отправляем данные на сервер POST запросом. */
     httplib::Result res =
         cli->Post("/ContourRectangles", input.dump(), "application/json");
 

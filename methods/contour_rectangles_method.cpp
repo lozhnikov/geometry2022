@@ -49,10 +49,11 @@ static int ContourRectanglesMethodHelper(const nlohmann::json &input,
                                     input.at("data").at(i).at(0).at(1)),
                            Point<T>(input.at("data").at(i).at(1).at(0),
                                     input.at("data").at(i).at(1).at(1)),
-                           i + 1);
+                          static_cast<int>(i + 1));
   }
 
-  std::list<Edge<T> *> *res = ContourRectangles<T>(data, size);
+  std::list<Edge<T> *> *res = ContourRectangles<T>(data,
+                                                   static_cast<int>(size));
   // std::cout << input.dump() << '\n';
 
   (*output)["size"] = res->size();
@@ -66,6 +67,10 @@ static int ContourRectanglesMethodHelper(const nlohmann::json &input,
   }
   // std::cout << output->dump() << '\n'; //Вывести результат в виде json
 
+  for (auto iter = res->begin(); iter != res->end(); iter++, i++) {
+    delete (*iter);
+  }
+  delete res;
   delete[] data;
 
   return 0;
