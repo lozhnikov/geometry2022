@@ -20,8 +20,8 @@ enum Side { LEFT_SIDE, RIGHT_SIDE, BOTTOM_SIDE, TOP_SIDE };
 
 template <typename T> class AxisParallelEdge {
  public:
-  const static T T_MAX;
-  const static T T_MIN;
+  static const T T_MAX;
+  static const T T_MIN;
   Rectangle<T> *r;
   int count;
   T m;
