@@ -35,6 +35,21 @@ int ContourRectanglesMethod(const nlohmann::json &input,
   return -1;
 }
 
+/**
+ * @brief Поиск контура объединения прямоугольников
+ *
+ * @tparam T Тип данных координат точек.
+ *
+ * @param input Входные данные в формате JSON.
+ * @param output Выходные данные в формате JSON.
+ * @param type Строковое представление типа данных координат точек.
+ * @return Функция возвращает 0 в случае успеха и отрицательное число
+ * если входные данные заданы некорректно.
+ *
+ * Функция запускает алгоритм поиска контура, используя входные данные
+ * в JSON формате. Результат также выдаётся в JSON формате. Функция
+ * используется для сокращения кода, необходимого для поддержки различных типов данных.
+ */
 template <typename T>
 static int ContourRectanglesMethodHelper(const nlohmann::json &input,
                                          nlohmann::json *output,

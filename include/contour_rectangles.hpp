@@ -19,14 +19,48 @@
 
 
 namespace geometry {
-
+/**
+ * @brief Сортирует массив
+ * @tparam T тип данных элеменов массива
+ *  
+ * @param arr Сортируемый массив
+ * @param size Размер массив
+ * @param cmp Компоратор
+ */
 template <typename T> void Sort(T *arr, size_t size, int (*cmp)(T, T));
-
+/**
+ * @brief Специалный компоратор для класса AxisParallelEdge
+ * @tparam T тип данных координат точек
+ *
+ * @param a Указатель на первый сравниваемый объект
+ * @param b Указатель на второй сравниваемый объект
+ *
+ * @return 1 если a > b; -1 если a < b; 0 если a = b
+ */
 template <typename T>
 int AxisParallelEdgeCmp(AxisParallelEdge<T> *a, AxisParallelEdge<T> *b);
+/**
+ * @brief Строит массив указателей ключевых точек для алгоритма (упорядоченный по х,
+ * массив из вертикальных ребер)
+ * @tparam T тип данных координат точек
+ *
+ * @param 1 Массив прямоугольников
+ * @param 2 Их количество
+ *
+ * @return Массив указателей на ребра вертильные ребра
+ */
+template <typename T> AxisParallelEdge<T> **BuildSchedule(Rectangle<T>*,
+                                                          size_t);
 
-template <typename T> AxisParallelEdge<T> **BuildSchedule(Rectangle<T>, size_t);
-
+/**
+ * @brief Строит контур объединения прямоугольников
+ * @tparam T тип данных координат точек
+ *
+ * @param r Массив прямоугольников
+ * @param n Их количество
+ *
+ * @return Указатель на список указателей на ребра контура
+ */
 template <typename T>
 std::list<Edge<T> *> *ContourRectangles(Rectangle<T> r[], int n) {
   AxisParallelEdge<T> **schedule = BuildSchedule(r, static_cast<size_t>(n));

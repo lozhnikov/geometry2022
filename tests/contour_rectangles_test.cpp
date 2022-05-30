@@ -8,12 +8,13 @@
 
 #include <httplib.h>
 #include <cmath>
+#include <limits>
 #include <contour_rectangles.hpp>
 #include <nlohmann/json.hpp>
 #include "test.hpp"
 #include "test_core.hpp"
 
-#define NUM_TRIES_FOR_RANDOM_TEST 10
+#define NUM_TRIES_FOR_RANDOM_TEST 100
 
 static void IntSimpleTest(httplib::Client *cli);
 static void FloatSimpleTest(httplib::Client *cli);
@@ -34,6 +35,11 @@ void TestContourRectangles(httplib::Client *cli) {
   RUN_TEST_REMOTE(suite, cli, RandomTest);
 }
 
+/** 
+ * @brief Простейший статический тест с целыми числами.
+ *
+ * @param cli Указатель на HTTP клиент.
+ */
 static void IntSimpleTest(httplib::Client *cli) {
   nlohmann::json input = R"(
   {
@@ -67,6 +73,11 @@ static void IntSimpleTest(httplib::Client *cli) {
   REQUIRE_EQUAL(to_string(output["data"][11]), "[[6,2],[6,3]]");
 }
 
+/** 
+ * @brief Простейший статический тест с числами с плавающей точкой.
+ *
+ * @param cli Указатель на HTTP клиент.
+ */
 static void FloatSimpleTest(httplib::Client *cli) {
   nlohmann::json input = R"(
   {
@@ -86,17 +97,26 @@ static void FloatSimpleTest(httplib::Client *cli) {
   REQUIRE_EQUAL(8, output["size"]);
   REQUIRE_EQUAL("float", output["type"]);
 
-  /*REQUIRE_CLOSE(output["data"][0],
-  nlohmann::json::parse("[[1.11,1.11],[1.11,2.4]]"));
-  REQUIRE_EQUAL(to_string(output["data"][1]), "[[0,0],[0,1]]");
-  REQUIRE_EQUAL(to_string(output["data"][2]), "[[-1,1],[0,1]]");
-  REQUIRE_EQUAL(to_string(output["data"][3]), "[[-1,4],[0,4]]");
-  REQUIRE_EQUAL(to_string(output["data"][4]), "[[0,4],[0,5]]");
-  REQUIRE_EQUAL(to_string(output["data"][5]), "[[0,0],[5,0]]");
-  REQUIRE_EQUAL(to_string(output["data"][6]), "[[0,5],[5,5]]");
-  REQUIRE_EQUAL(to_string(output["data"][7]), "[[5,0],[5,2]]");*/
+  const float eps = std::numeric_limits<float>::epsilon() * 1e4;
+  float x1, x2, y1, y2;
+  for (size_t i = 0; i < 8; i++) {
+    x1 = output["data"][i][0][0]; x2 = output["data"][i][1][0];
+    y1 = output["data"][i][0][1]; y2 = output["data"][i][1][1];
+    if (std::fabs(x1 - x2) < eps) {
+      continue;
+    } else if (std::fabs(y1 - y2) < eps) {
+      continue;
+    } else {
+      REQUIRE_EQUAL(to_string(output["data"][i]), "Не параллельно осям");
+    }
+  }
 }
 
+/** 
+ * @brief Простейший случайный тест.
+ *
+ * @param cli Указатель на HTTP клиент.
+ */
 static void RandomTest(httplib::Client *cli) {
   RandomIntegerHelperTest<int>(cli, "int");
 
@@ -105,6 +125,17 @@ static void RandomTest(httplib::Client *cli) {
   RandomFloatingPointHelperTest<long double>(cli, "long double");
 }
 
+/** 
+ * @brief Простейший случайный тест для целых чисел.
+ *
+ * @tparam T Тип данных координат точек.
+ *
+ * @param cli Указатель на HTTP клиент.
+ * @param type Строковое представление типа данных координат точек.
+ *
+ * Функция используется для сокращения кода, необходимого для поддержки
+ * различных типов данных.
+ */
 template <typename T>
 static void RandomIntegerHelperTest(httplib::Client *cli, std::string type) {
   // Число попыток.
@@ -165,10 +196,30 @@ static void RandomIntegerHelperTest(httplib::Client *cli, std::string type) {
 
     REQUIRE_EQUAL(it, output["id"]);
     REQUIRE_EQUAL(type, output["type"]);
-    // REQUIRE_EQUAL(size, output["size"]);
+
+    for (size_t i = 0; i < output["size"]; i++) {
+      if (output["data"][i][0][0] == output["data"][i][1][0]) {
+        continue;
+      } else if (output["data"][i][0][1] == output["data"][i][1][1]) {
+        continue;
+      } else {
+        REQUIRE_EQUAL(to_string(output["data"][i]), "Не параллельно осям");
+      }
+    }
   }
 }
 
+/** 
+ * @brief Простейший случайный тест для чисел с плавающей точкой.
+ *
+ * @tparam T Тип данных координат точек.
+ *
+ * @param cli Указатель на HTTP клиент.
+ * @param type Строковое представление типа данных координат точек.
+ *
+ * Функция используется для сокращения кода, необходимого для поддержки
+ * различных типов данных.
+ */
 template <typename T>
 static void RandomFloatingPointHelperTest(httplib::Client *cli,
                                           std::string type) {
@@ -232,6 +283,17 @@ static void RandomFloatingPointHelperTest(httplib::Client *cli,
 
     REQUIRE_EQUAL(it, output["id"]);
     REQUIRE_EQUAL(type, output["type"]);
-    // REQUIRE_EQUAL(size, output["size"]);
+
+    for (size_t i = 0; i < output["size"]; i++) {
+      x1 = output["data"][i][0][0]; x2 = output["data"][i][1][0];
+      y1 = output["data"][i][0][1]; y2 = output["data"][i][1][1];
+      if (std::fabs(x1 - x2) < eps) {
+        continue;
+      } else if (std::fabs(y1 - y2) < eps) {
+        continue;
+      } else {
+        REQUIRE_EQUAL(to_string(output["data"][i]), "Не параллельно осям");
+      }
+    }
   }
 }
