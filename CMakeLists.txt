@@ -110,7 +110,6 @@ include_directories(${GEOMETRY_INCLUDE_DIRS})
 add_executable(
   geometry_server
   include/common.hpp
-  include/contour_rectangles.hpp
   include/edge.hpp
   include/edge_impl.hpp
   include/orientation.hpp
@@ -118,9 +117,10 @@ add_executable(
   include/point_impl.hpp
   include/polygon.hpp
   include/polygon_impl.hpp
-  methods/contour_rectangles_method.cpp
+  include/triangulate.hpp
   methods/main.cpp
   methods/methods.hpp
+  methods/triangulate_method.cpp
 )
 
 ####################################################################
@@ -141,7 +141,6 @@ target_link_libraries(geometry_server ${GEOMETRY_LIBS})
 add_executable(
   geometry_test
   include/common.hpp
-  include/contour_rectangles.hpp
   include/edge.hpp
   include/edge_impl.hpp
   include/orientation.hpp
@@ -149,7 +148,6 @@ add_executable(
   include/point_impl.hpp
   include/polygon.hpp
   include/polygon_impl.hpp
-  tests/contour_rectangles_test.cpp
   tests/edge_test.cpp
   tests/io.hpp
   tests/main.cpp
@@ -159,6 +157,7 @@ add_executable(
   tests/test.hpp
   tests/test_core.cpp
   tests/test_core.hpp
+  tests/triangulate_test.cpp
 )
 
 #####################################################################

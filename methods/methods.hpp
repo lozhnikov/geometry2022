@@ -10,24 +10,13 @@
 #ifndef METHODS_METHODS_HPP_
 #define METHODS_METHODS_HPP_
 
+#include <nlohmann/json.hpp>
+
 namespace geometry {
 
 /* Сюда нужно вставить объявление серверной части алгоритма. */
 
-/**
- * @brief Метод построения контура объединения прямоугольников.
- *
- * @param input Входные данные в формате JSON.
- * @param output Выходные данные в формате JSON.
- * @return Функция возвращает 0 в случае успеха и отрицательное число
- * если входные данные заданы некорректно.
- *
- * Функция запускает алгоритм сортировки вставками, используя входные данные
- * в JSON формате. Результат также выдаётся в JSON формате.
- */
-int ContourRectanglesMethod(const nlohmann::json& input,
-                            nlohmann::json* output);
-
+    int Triangulate(const nlohmann::json& input, nlohmann::json* output);
 
 /* Конец вставки. */
 

@@ -38,13 +38,14 @@ int main(int argc, char* argv[]) {
 
   httplib::Client cli(url.c_str());
 
-  /* Сюда нужно вставить вызов набора тестов для алгоритма. */
+  // Сюда нужно вставить вызов набора тестов для алгоритма.
 
-  TestContourRectangles(&cli);
+  TestTriangulate(cli);
 
-  /* Конец вставки. */
+  // Конец вставки.
 
   // Отправляем GET запрос для остановки сервера.
+    
   httplib::Result res = cli.Get("/stop");
 
   if (res->status != 200)
