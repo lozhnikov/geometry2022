@@ -118,9 +118,11 @@ add_executable(
   include/point_impl.hpp
   include/polygon.hpp
   include/polygon_impl.hpp
+  include/present.hpp
   methods/contour_rectangles_method.cpp
   methods/main.cpp
   methods/methods.hpp
+  methods/present_method.cpp
 )
 
 ####################################################################
@@ -149,6 +151,7 @@ add_executable(
   include/point_impl.hpp
   include/polygon.hpp
   include/polygon_impl.hpp
+  include/present.hpp
   tests/contour_rectangles_test.cpp
   tests/edge_test.cpp
   tests/io.hpp
@@ -156,6 +159,7 @@ add_executable(
   tests/orientation_test.cpp
   tests/point_test.cpp
   tests/polygon_test.cpp
+  tests/present_test.cpp
   tests/test.hpp
   tests/test_core.cpp
   tests/test_core.hpp

@@ -30,6 +30,21 @@ int ContourRectanglesMethod(const nlohmann::json& input,
 
 
 /* Конец вставки. */
+    
+/**
+ * @brief Метод построения выпуклой оболочки.
+ *
+ * @param input Входные данные в формате JSON.
+ * @param output Выходные данные в формате JSON.
+ * @return Функция возвращает 0 в случае успеха и отрицательное число
+ * если входные данные заданы некорректно.
+ *
+ * Функция запускает алгоритм сортировки вставками, используя входные данные
+ * в JSON формате. Результат также выдаётся в JSON формате.
+ */
+
+int PresentMethod(const nlohmann::json& input, nlohmann::json* output);
+/* Конец вставки. */
 
 }  // namespace geometry
 

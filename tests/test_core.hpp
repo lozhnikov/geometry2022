@@ -212,6 +212,55 @@ void RequireEqual(const Left& left, const Right& right,
   }
 }
 
+template<typename Left, typename Right>
+void RequireAboveEqual(const Left& left, const Right& right,
+                  const char* leftName, const char* rightName,
+                  const char* fileName, int line) {
+  using ascii_codes::esc;
+  using ascii_codes::redColor;
+  using ascii_codes::defaultColor;
+  using ascii_codes::bold;
+  using ascii_codes::normal;
+
+  if (left < right) {
+    std::ostringstream reason;
+
+    reason << esc << redColor << esc << bold
+           << "ERROR: "
+           << esc << defaultColor << esc << normal
+           << fileName << ":" << line << " "
+           << leftName << " < " << rightName
+           << "  (" << left << " <" << right << ")!";
+
+    throw std::runtime_error(reason.str());
+  }
+}
+
+template<typename Left_1, typename Left_2, typename Right_1, typename Right_2>
+void RequireAboveEqualLexigrafical(const Left_1& left_1, const Left_2& left_2,
+                  const Right_1& right_1, const Right_2& right_2,
+                  const char* leftName, const char* rightName,
+                  const char* fileName, int line) {
+  using ascii_codes::esc;
+  using ascii_codes::redColor;
+  using ascii_codes::defaultColor;
+  using ascii_codes::bold;
+  using ascii_codes::normal;
+
+  if (left_1 < right_1 || (left_1 == right_1 && left_2 < right_2)) {
+    std::ostringstream reason;
+
+    reason << esc << redColor << esc << bold
+           << "ERROR: "
+           << esc << defaultColor << esc << normal
+           << fileName << ":" << line << " "
+           << leftName << " < " << rightName
+           << "!";
+
+    throw std::runtime_error(reason.str());
+  }
+}
+
 template<typename FloatingPointType>
 void RequireClose(FloatingPointType left, FloatingPointType right,
                   FloatingPointType tolerance,
@@ -280,6 +329,12 @@ void RequireThrow(ActionType action,
 
 #define REQUIRE_EQUAL(left, right) \
   RequireEqual(left, right, #left, #right, __FILE__, __LINE__)
+
+#define REQUIRE_ABOVE_EQUAL(left, right) \
+  RequireAboveEqual(left, right, #left, #right, __FILE__, __LINE__)
+
+#define REQUIRE_ABOVE_EQUAL_LEXIGRAFICAL(left_1, left_2, right_1, right_2) \
+  RequireAboveEqualLexigrafical(left_1, left_2, right_1, right_2, #left_1, #right_1, __FILE__, __LINE__)
 
 #define REQUIRE_CLOSE(left, right, tolerance) \
   RequireClose(left, right, tolerance, #left, #right, __FILE__, __LINE__)
