@@ -36,5 +36,13 @@ void TestContourRectangles(httplib::Client* cli);
 void TestGrahamScan(httplib::Client* cli);
 
 /* Конец вставки. */
+/**
+ * @brief Набор тестов для алгоритма построения выпуклой оболочки.
+ *
+ * @param cli Указатель на HTTP клиент.
+ */
+void TestPresent(httplib::Client* cli);
+
+/* Конец вставки. */
 
 #endif  // TESTS_TEST_HPP_

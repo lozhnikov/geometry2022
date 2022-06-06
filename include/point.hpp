@@ -251,7 +251,7 @@ class Point {
    * @return Расстояние от начала координат до текущей точки.
    */
   T Length() const {
-    return std::sqrt(X() * X() + Y() * Y());
+    return static_cast<T>(std::sqrt(X() * X() + Y() * Y()));
   }
 
   /**
