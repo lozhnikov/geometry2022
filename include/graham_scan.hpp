@@ -11,11 +11,11 @@
 
 #include <iostream>
 #include <cstddef>
+#include <list>
 #include <algorithm>
 #include <common.hpp>
 #include <point.hpp>
 #include <polygon.hpp>
-#include <list>
 
 namespace geometry {
 
@@ -82,14 +82,15 @@ template<typename T>
 Polygon<T> GrahamScan(std::list<Point<T>> pts, size_t n) {
   size_t m = 0;
   if (m == n) m = n;
-  
+
   /**
    * Ищем самую нижнюю левую вершину, чтобы взять её за центр координат
    **/
   auto imax = pts.begin();
   for (auto itr = pts.begin(); itr != pts.end(); itr++) {
-    if (itr->Y() < imax->Y() ||
-        (std::fabs(itr->Y() - imax->Y()) < 0.01 && itr->X() > imax->X())) imax = itr;
+    if (itr->Y() < imax->Y() || 
+        (std::fabs(itr->Y() - imax->Y()) < 0.01 && 
+         itr->X() > imax->X())) imax = itr;
   }
 
   /**

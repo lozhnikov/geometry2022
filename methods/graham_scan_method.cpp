@@ -7,28 +7,26 @@
  * Функция принимает и возвращает данные в JSON формате.
  */
 
+#include "graham_scan.hpp"
 #include <iostream>
 #include <string>
 #include <nlohmann/json.hpp>
-#include "graham_scan.hpp"
 
 namespace geometry {
 
 template<typename T>
-int GrahamScanMethodHelper(const nlohmann::json& input, nlohmann::json* output, std::string type);
+int GrahamScanMethodHelper(const nlohmann::json& input, 
+                           nlohmann::json* output, std::string type);
 
 int GrahamScanMethod(const nlohmann::json& input, nlohmann::json* output) {
   std::string type = input.at("type");
   if (type == "int") {
     return GrahamScanMethodHelper<int>(input, output, type);
-  }
-  else if (type == "float") {
+  } else if (type == "float") {
     return GrahamScanMethodHelper<float>(input, output, type);
-  }
-  else if (type == "double") {
+  } else if (type == "double") {
     return GrahamScanMethodHelper<double>(input, output, type);
-  }
-  else if (type == "long double") {
+  } else if (type == "long double") {
     return GrahamScanMethodHelper<long double>(input, output, type);
   }
 
@@ -36,7 +34,7 @@ int GrahamScanMethod(const nlohmann::json& input, nlohmann::json* output) {
 }
 
 template<typename T>
-int GrahamScanMethodHelper(const nlohmann::json& input, 
+int GrahamScanMethodHelper(const nlohmann::json& input,
                            nlohmann::json* output, std::string type) {
   (*output)["id"] = input.at("id");
 
@@ -44,7 +42,8 @@ int GrahamScanMethodHelper(const nlohmann::json& input,
 
   std::list<Point<T>> data;
   for (size_t i = 0; i < size; i++) {
-    data.push_back(Point<T>(input.at("data").at(0).at(i), input.at("data").at(1).at(i)));
+    data.push_back(Point<T>(input.at("data").at(0).at(i),
+                            input.at("data").at(1).at(i)));
   }
 
   Polygon<T> P = GrahamScan<T>(data, size);

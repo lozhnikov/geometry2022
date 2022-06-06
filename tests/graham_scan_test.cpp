@@ -5,10 +5,10 @@
  * Реализация набора тестов для алгоритма сортировки вставками.
  */
 
+#include <graham_scan.hpp>
 #include <ostream>
 #include <httplib.h>
 #include <nlohmann/json.hpp>
-#include <graham_scan.hpp>
 #include "test_core.hpp"
 #include "test.hpp"
 
@@ -208,7 +208,7 @@ static void SimpleTestGrahamScan2(httplib::Client* cli) {
     input["id"] = 2;
     input["type"] = "long double";
     input["size"] = 9;
-    input["data"] = { {-10, 30, 10, -50, -10, -20, -40, 10, -30}, 
+    input["data"] = { {-10, 30, 10, -50, -10, -20, -40, 10, -30},
                      {-20, -50, 10, -50, -60, -10, -10, -30, -30} };
     /*
     ***********     ***********
@@ -269,7 +269,7 @@ static void RandomTestGrahamScan(httplib::Client* cli) {
   RandomFloatingPointHelperTest<double>(cli, "double");
   RandomFloatingPointHelperTest<long double>(cli, "long double");
 }
-// /** 
+// /**
 //  * @brief Простейший случайный тест для целых чисел.
 //  *
 //  * @tparam T Тип данных сортируемых элементов.
