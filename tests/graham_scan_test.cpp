@@ -5,10 +5,10 @@
  * Реализация набора тестов для алгоритма сортировки вставками.
  */
 
-#include <httplib.h>
-#include <graham_scan.hpp>
 #include <ostream>
+#include <httplib.h>
 #include <nlohmann/json.hpp>
+#include <graham_scan.hpp>
 #include "test_core.hpp"
 #include "test.hpp"
 
