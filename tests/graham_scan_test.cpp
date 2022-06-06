@@ -393,7 +393,7 @@ static void RandomFloatingPointHelperTest(httplib::Client* cli,
 
     std::list<geometry::Point<T>> data;
     for (size_t i = 0; i < size; i++) {
-      data.push_back((geometry::Point<T>)(output.at("data").at(0).at(i),
+      data.push_back(geometry::Point<T>(output.at("data").at(0).at(i),
                                           output.at("data").at(1).at(i)));
     }
     data.push_back(*data.begin());
