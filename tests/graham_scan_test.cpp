@@ -5,12 +5,12 @@
  * Реализация набора тестов для алгоритма сортировки вставками.
  */
 
+#include <ostream>
 #include <graham_scan.hpp>
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include "test_core.hpp"
 #include "test.hpp"
-#include <ostream>
 
 template<typename T>
 int geometry::polarCmp(Point<T> p, Point<T> q);
@@ -31,7 +31,7 @@ void TestGrahamScan(httplib::Client* cli) {
   TestSuite suite("TestGrahamScan");
 
   // SimpleTestGrahamScan1(cli);
-  
+
   RUN_TEST_REMOTE(suite, cli, SimpleTestGrahamScan1);
   RUN_TEST_REMOTE(suite, cli, SimpleTestGrahamScan2);
   RUN_TEST_REMOTE(suite, cli, SimpleTestGrahamScan3);
@@ -52,7 +52,7 @@ static void SimpleTestGrahamScan1(httplib::Client* cli) {
      функции nlohmann::json::parse(), но и при помощи
      специального литерала _json. Если его поставить после строки
      в кавычках, то она конвертируется в json объект.
-     
+
      R"(
      )" Так записывается строка, содержащая символы перевода строки
      в C++. Всё, что между скобками это символы строки. Перводы строк
@@ -98,7 +98,7 @@ static void SimpleTestGrahamScan1(httplib::Client* cli) {
     REQUIRE_EQUAL(4, output["size"]);
     REQUIRE_EQUAL(1, output["id"]);
     REQUIRE_EQUAL("long double", output["type"]);
-    
+
     REQUIRE_EQUAL(output["data"][0][0], -30);
     REQUIRE_EQUAL(output["data"][1][0], 0);
     REQUIRE_EQUAL(output["data"][0][1], 20);
@@ -122,7 +122,7 @@ static void SimpleTestGrahamScan3(httplib::Client* cli) {
      функции nlohmann::json::parse(), но и при помощи
      специального литерала _json. Если его поставить после строки
      в кавычках, то она конвертируется в json объект.
-     
+
      R"(
      )" Так записывается строка, содержащая символы перевода строки
      в C++. Всё, что между скобками это символы строки. Перводы строк
@@ -130,7 +130,7 @@ static void SimpleTestGrahamScan3(httplib::Client* cli) {
      (а не через \n).     
     */
     nlohmann::json input;
-    
+
     input["id"] = 3;
     input["type"] = "long double";
     input["size"] = 25;
@@ -166,7 +166,7 @@ static void SimpleTestGrahamScan3(httplib::Client* cli) {
     REQUIRE_EQUAL(4, output["size"]);
     REQUIRE_EQUAL(3, output["id"]);
     REQUIRE_EQUAL("long double", output["type"]);
-    
+
     REQUIRE_EQUAL(output["data"][0][0], 4);
     REQUIRE_EQUAL(output["data"][1][0], 0);
     REQUIRE_EQUAL(output["data"][0][1], 4);
@@ -189,7 +189,7 @@ static void SimpleTestGrahamScan2(httplib::Client* cli) {
      функции nlohmann::json::parse(), но и при помощи
      специального литерала _json. Если его поставить после строки
      в кавычках, то она конвертируется в json объект.
-     
+
      R"(
      )" Так записывается строка, содержащая символы перевода строки
      в C++. Всё, что между скобками это символы строки. Перводы строк
@@ -238,7 +238,7 @@ static void SimpleTestGrahamScan2(httplib::Client* cli) {
     REQUIRE_EQUAL(5, output["size"]);
     REQUIRE_EQUAL(2, output["id"]);
     REQUIRE_EQUAL("long double", output["type"]);
-    
+
     REQUIRE_EQUAL(output["data"][0][0], -10);
     REQUIRE_EQUAL(output["data"][1][0], -60);
     REQUIRE_EQUAL(output["data"][0][1], 30);
@@ -346,6 +346,7 @@ static void RandomTestGrahamScan(httplib::Client* cli) {
  * Функция используется для сокращения кода, необходимого для поддержки
  * различных типов данных.
  */
+
 template<typename T>
 static void RandomFloatingPointHelperTest(httplib::Client* cli,
                                           std::string type) {
@@ -397,7 +398,7 @@ static void RandomFloatingPointHelperTest(httplib::Client* cli,
       data.push_back(*point);
     }
     data.push_back(*data.begin());
-    
+
     auto it1 = data.begin();
     auto it2 = it1;
     it2++;
