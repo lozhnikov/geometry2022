@@ -33,6 +33,7 @@ void TestOrientation();
 /* Сюда нужно добавить объявления тестовых функций. */
 
 void TestContourRectangles(httplib::Client* cli);
+void TestGrahamScan(httplib::Client* cli);
 
 /* Конец вставки. */
 
