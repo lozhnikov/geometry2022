@@ -5,8 +5,8 @@
  * Реализация набора тестов для алгоритма сортировки вставками.
  */
 
-#include <ostream>
 #include <httplib.h>
+#include <ostream>
 #include <nlohmann/json.hpp>
 #include <graham_scan.hpp>
 #include "test_core.hpp"
