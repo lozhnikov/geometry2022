@@ -10,6 +10,8 @@
 #ifndef METHODS_METHODS_HPP_
 #define METHODS_METHODS_HPP_
 
+#include <nlohmann/json.hpp>
+
 namespace geometry {
 
 /* Сюда нужно вставить объявление серверной части алгоритма. */
@@ -28,7 +30,7 @@ namespace geometry {
 int ContourRectanglesMethod(const nlohmann::json& input,
                             nlohmann::json* output);
 
-
+int Triangulate(const nlohmann::json& input, nlohmann::json* output);
 /* Конец вставки. */
 
 }  // namespace geometry

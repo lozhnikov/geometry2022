@@ -11,7 +11,8 @@
 #include "methods.hpp"
 
 using geometry::ContourRectanglesMethod;
-
+using std::vector;
+using geometry::Triangulate;
 int main(int argc, char* argv[]) {
   // Порт по-умолчанию.
   int port = 8080;
@@ -60,6 +61,16 @@ int main(int argc, char* argv[]) {
     res.set_content(output.dump(), "application/json");
   });
 
+    svr.Post("/triangulate", [&](const httplib::Request& request,
+    httplib::Response& responce) {
+    // преобразуем строку в JSON
+    nlohmann::json input = nlohmann::json::parse(request.body);
+    nlohmann::json output;
+    Triangulate(input, &output);
+    // отправка
+    responce.body = output.dump();
+    responce.status = 200;
+    });
   /* Конец вставки. */
 
   // Эта функция запускает сервер на указанном порту. Программа не завершится
