@@ -6,9 +6,9 @@
  */
 
 #include <ostream>
-#include <graham_scan.hpp>
 #include <httplib.h>
 #include <nlohmann/json.hpp>
+#include <graham_scan.hpp>
 #include "test_core.hpp"
 #include "test.hpp"
 
@@ -134,8 +134,8 @@ static void SimpleTestGrahamScan3(httplib::Client* cli) {
     input["id"] = 3;
     input["type"] = "long double";
     input["size"] = 25;
-    for (size_t i = 0; i < 5; i++){
-      for (size_t j = 0; j < 5; j++){
+    for (size_t i = 0; i < 5; i++) {
+      for (size_t j = 0; j < 5; j++) {
         input["data"][0][i * 5 + j] = i;
         input["data"][1][i * 5 + j] = j;
       }
@@ -208,7 +208,8 @@ static void SimpleTestGrahamScan2(httplib::Client* cli) {
     input["id"] = 2;
     input["type"] = "long double";
     input["size"] = 9;
-    input["data"] = { {-10, 30, 10, -50, -10, -20, -40, 10, -30}, {-20, -50, 10, -50, -60, -10, -10, -30, -30} };
+    input["data"] = { {-10, 30, 10, -50, -10, -20, -40, 10, -30}, 
+                     {-20, -50, 10, -50, -60, -10, -10, -30, -30} };
     /*
     ***********     ***********
     *******O***     *******3***
@@ -268,7 +269,6 @@ static void RandomTestGrahamScan(httplib::Client* cli) {
   RandomFloatingPointHelperTest<double>(cli, "double");
   RandomFloatingPointHelperTest<long double>(cli, "long double");
 }
-
 // /** 
 //  * @brief Простейший случайный тест для целых чисел.
 //  *
@@ -392,10 +392,9 @@ static void RandomFloatingPointHelperTest(httplib::Client* cli,
     size = output.at("size");
 
     std::list<geometry::Point<T>> data;
-    geometry::Point<T> *point = new geometry::Point<T>;
-    for (size_t i = 0; i < size; i++){
-      point = new (geometry::Point<T>)(output.at("data").at(0).at(i), output.at("data").at(1).at(i));
-      data.push_back(*point);
+    for (size_t i = 0; i < size; i++) {
+      data.push_back((geometry::Point<T>)(output.at("data").at(0).at(i),
+                                          output.at("data").at(1).at(i)));
     }
     data.push_back(*data.begin());
 
@@ -404,8 +403,8 @@ static void RandomFloatingPointHelperTest(httplib::Client* cli,
     it2++;
     auto it3 = it2;
     it3++;
-    for(; it3 != data.end(); it1++, it2++, it3++){
-      if (!geometry::polarCmp<T>(*it2 - *it1, *it3 - *it2)){
+    for (; it3 != data.end(); it1++, it2++, it3++) {
+      if (!geometry::polarCmp<T>(*it2 - *it1, *it3 - *it2)) {
         REQUIRE_EQUAL(1, 0);
       }
     }

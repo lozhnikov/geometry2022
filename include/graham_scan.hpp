@@ -29,8 +29,7 @@ class Polygon;
  * Функция сравнения вершин по их углу
  **/
 template<typename T>
-int polarCmp(Point<T> p, Point<T> q)
-{
+int polarCmp(Point<T> p, Point<T> q) {
   T precision = T(0.001);
   T pPolar = p.PolarAngle(precision);
   T qPolar = q.PolarAngle(precision);
@@ -80,8 +79,7 @@ Polygon *GrahamScan(Point pts[], int n){
 */
 
 template<typename T>
-Polygon<T> GrahamScan(std::list<Point<T>> pts, size_t n)
-{
+Polygon<T> GrahamScan(std::list<Point<T>> pts, size_t n) {
   size_t m = 0;
   if (m == n) m = n;
   
@@ -89,7 +87,7 @@ Polygon<T> GrahamScan(std::list<Point<T>> pts, size_t n)
    * Ищем самую нижнюю левую вершину, чтобы взять её за центр координат
    **/
   auto imax = pts.begin();
-  for (auto itr = pts.begin(); itr != pts.end(); itr++){
+  for (auto itr = pts.begin(); itr != pts.end(); itr++) {
     if (itr->Y() < imax->Y() ||
         (std::fabs(itr->Y() - imax->Y()) < 0.01 && itr->X() > imax->X())) imax = itr;
   }
@@ -120,14 +118,12 @@ Polygon<T> GrahamScan(std::list<Point<T>> pts, size_t n)
   auto ipr = pts.begin();
   itr++;
   itr++;
-  for (; itr != pts.end(); itr++)
-  {
+  for (; itr != pts.end(); itr++) {
     imax = itr;
     imax--;
     ipr = imax;
     ipr--;
-    while(imax != pts.begin() && !polarCmp<T>(*imax - *ipr, *itr - *imax))
-    {
+    while (imax != pts.begin() && !polarCmp<T>(*imax - *ipr, *itr - *imax)) {
       pts.erase(imax);
       imax = ipr;
       ipr--;

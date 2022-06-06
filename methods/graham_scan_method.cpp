@@ -17,23 +17,18 @@ namespace geometry {
 template<typename T>
 int GrahamScanMethodHelper(const nlohmann::json& input, nlohmann::json* output, std::string type);
 
-int GrahamScanMethod(const nlohmann::json& input, nlohmann::json* output)
-{
+int GrahamScanMethod(const nlohmann::json& input, nlohmann::json* output) {
   std::string type = input.at("type");
-  if (type == "int")
-  {
+  if (type == "int") {
     return GrahamScanMethodHelper<int>(input, output, type);
   }
-  else if (type == "float")
-  {
+  else if (type == "float") {
     return GrahamScanMethodHelper<float>(input, output, type);
   }
-  else if (type == "double")
-  {
+  else if (type == "double") {
     return GrahamScanMethodHelper<double>(input, output, type);
   }
-  else if (type == "long double")
-  {
+  else if (type == "long double") {
     return GrahamScanMethodHelper<long double>(input, output, type);
   }
 
@@ -41,15 +36,14 @@ int GrahamScanMethod(const nlohmann::json& input, nlohmann::json* output)
 }
 
 template<typename T>
-int GrahamScanMethodHelper(const nlohmann::json& input, nlohmann::json* output, std::string type)
-{
+int GrahamScanMethodHelper(const nlohmann::json& input, 
+                           nlohmann::json* output, std::string type) {
   (*output)["id"] = input.at("id");
 
   size_t size = input.at("size");
 
   std::list<Point<T>> data;
-  for (size_t i = 0; i < size; i++)
-  {
+  for (size_t i = 0; i < size; i++) {
     data.push_back(Point<T>(input.at("data").at(0).at(i), input.at("data").at(1).at(i)));
   }
 
@@ -61,8 +55,7 @@ int GrahamScanMethodHelper(const nlohmann::json& input, nlohmann::json* output, 
   (*output)["type"] = type;
 
   size_t i = 0;
-  for (Point<T> n : data)
-  {
+  for (Point<T> n : data) {
     (*output)["data"][0][i] = n.X();
     (*output)["data"][1][i] = n.Y();
     i++;
