@@ -88,8 +88,8 @@ Polygon<T> GrahamScan(std::list<Point<T>> pts, size_t n) {
    **/
   auto imax = pts.begin();
   for (auto itr = pts.begin(); itr != pts.end(); itr++) {
-    if (itr->Y() < imax->Y() || 
-        (std::fabs(itr->Y() - imax->Y()) < 0.01 && 
+    if (itr->Y() < imax->Y() ||
+        (std::fabs(itr->Y() - imax->Y()) < 0.01 &&
          itr->X() > imax->X())) imax = itr;
   }
 

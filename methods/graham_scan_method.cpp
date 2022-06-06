@@ -15,7 +15,7 @@
 namespace geometry {
 
 template<typename T>
-int GrahamScanMethodHelper(const nlohmann::json& input, 
+int GrahamScanMethodHelper(const nlohmann::json& input,
                            nlohmann::json* output, std::string type);
 
 int GrahamScanMethod(const nlohmann::json& input, nlohmann::json* output) {
