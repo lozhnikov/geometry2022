@@ -334,7 +334,8 @@ void RequireThrow(ActionType action,
   RequireAboveEqual(left, right, #left, #right, __FILE__, __LINE__)
 
 #define REQUIRE_ABOVE_EQUAL_LEXIGRAFICAL(left_1, left_2, right_1, right_2) \
-  RequireAboveEqualLexigrafical(left_1, left_2, right_1, right_2, #left_1, #right_1, __FILE__, __LINE__)
+  RequireAboveEqualLexigrafical\
+(left_1, left_2, right_1, right_2, #left_1, #right_1, __FILE__, __LINE__)
 
 #define REQUIRE_CLOSE(left, right, tolerance) \
   RequireClose(left, right, tolerance, #left, #right, __FILE__, __LINE__)

@@ -66,7 +66,8 @@ static int PresentMethodHelper(const nlohmann::json& input,
   Point<T>* data = new Point<T>[2*size];
 
   for (size_t i = 0; i < size; i++) {
-    Point<T> current = Point<T>(input.at("data").at(2*i), input.at("data").at(2*i+1));
+    Point<T> current = Point<T>
+        (input.at("data").at(2*i), input.at("data").at(2*i+1));
     data[i] = current;
   }
   /* Здесь вызывается сам алгоритм построения выпуклой оболочки. */

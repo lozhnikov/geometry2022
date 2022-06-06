@@ -216,20 +216,20 @@ static void RandomIntegerHelperTest(httplib::Client* cli, std::string type) {
     REQUIRE_ABOVE_EQUAL(size, output["size"]);
     REQUIRE_EQUAL(it, output["id"]);
     REQUIRE_EQUAL(type, output["type"]);
-      
     size_t new_size = output["size"];
     size_t ru = 0;
-    //ru - RIGHT AND UP
+    // ru - RIGHT AND UP
     for (size_t i = 1; i < new_size; i++)
-      if (output["data"][2*i] > output["data"][2*ru] || 
-          (output["data"][2*i] == output["data"][2*ru] && output["data"][2*i+1] > output["data"][2*ru+1]))
+      if (output["data"][2*i] > output["data"][2*ru] ||
+          (output["data"][2*i] == output["data"][2*ru] &&
+           output["data"][2*i+1] > output["data"][2*ru+1]))
         ru = i;
     for (size_t i = 0; i < new_size; i++)
-        REQUIRE_ABOVE_EQUAL_LEXIGRAFICAL(output["data"][2*ru], output["data"][2*ru+1], data[2*i], data[2*i+1]);
-    
+        REQUIRE_ABOVE_EQUAL_LEXIGRAFICAL(output["data"][2*ru],
+                                         output["data"][2*ru+1],
+                                         data[2*i], data[2*i+1]);
   }
 }
-
 
 template<typename T>
 static void RandomFloatingPointHelperTest(httplib::Client* cli,
@@ -285,16 +285,22 @@ static void RandomFloatingPointHelperTest(httplib::Client* cli,
     for (size_t i = 0; i < 2*new_size; i++)
         new_data[i] = output["data"][i];
     size_t new_ru = 0;
-    //ru - RIGHT AND UP
-    for (size_t i = 1; i < new_size; i++)
-      if ((new_data[2*i] - new_data[2*new_ru] > eps) || 
-          ((std::fabs(new_data[2*i] - new_data[2*new_ru]) <= eps)  && (new_data[2*i+1] - new_data[2*new_ru+1]) > eps))
-        new_ru = i;
+    // ru - RIGHT AND UP
+    for (size_t i = 1; i < new_size; i++) {
+      if ((new_data[2*i] - new_data[2*new_ru] > eps) ||
+          ((std::fabs(new_data[2*i] - new_data[2*new_ru]) <= eps)
+           && (new_data[2*i+1] - new_data[2*new_ru+1]) > eps)) {
+            new_ru = i;
+      }
+    }
     size_t ru = 0;
-    for (size_t i = 1; i < size; i++)
-      if ((data[2*i] - data[2*ru] > eps) || 
-          ((std::fabs(data[2*i] - data[2*ru]) <= eps)  && (data[2*i+1] - data[2*ru+1]) > eps))
-        ru = i;
+    for (size_t i = 1; i < size; i++) {
+      if ((data[2*i] - data[2*ru] > eps) ||
+          ((std::fabs(data[2*i] - data[2*ru]) <= eps)
+           && (data[2*i+1] - data[2*ru+1]) > eps)) {
+            ru = i;
+      }
+    }
     REQUIRE_CLOSE(new_data[2*new_ru], data[2*ru], eps);
     REQUIRE_CLOSE(new_data[2*new_ru+1], data[2*ru+1], eps);
   }

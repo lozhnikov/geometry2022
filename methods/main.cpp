@@ -62,7 +62,6 @@ int main(int argc, char* argv[]) {
   });
 
   /* Конец вставки. */
-    
   /* /Present это адрес для запросов на формирование выпуклой оболочки
   на сервере. */
   svr.Post("/Present", [&](const httplib::Request& req,

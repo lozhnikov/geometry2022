@@ -30,7 +30,6 @@ int ContourRectanglesMethod(const nlohmann::json& input,
 
 
 /* Конец вставки. */
-    
 /**
  * @brief Метод построения выпуклой оболочки.
  *
