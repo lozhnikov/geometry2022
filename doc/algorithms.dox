@@ -6,6 +6,7 @@
 @page algorithms Алгоритмы
 
 Список реализованных алгоритмов:
-
+@ref contour_rectangles
+@ref triangulate
 
 */

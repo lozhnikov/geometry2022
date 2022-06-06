@@ -119,10 +119,12 @@ add_executable(
   include/point_impl.hpp
   include/polygon.hpp
   include/polygon_impl.hpp
+  include/triangulate.hpp
   methods/contour_rectangles_method.cpp
   methods/graham_scan_method.cpp
   methods/main.cpp
   methods/methods.hpp
+  methods/triangulate_method.cpp
 )
 
 ####################################################################
@@ -163,6 +165,7 @@ add_executable(
   tests/test.hpp
   tests/test_core.cpp
   tests/test_core.hpp
+  tests/triangulate_test.cpp
 )
 
 #####################################################################

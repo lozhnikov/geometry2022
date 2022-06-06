@@ -29,7 +29,7 @@ namespace geometry {
  */
 template <typename T> void Sort(T *arr, size_t size, int (*cmp)(T, T));
 /**
- * @brief Специалный компоратор для класса AxisParallelEdge
+ * @brief Специальный компоратор для класса AxisParallelEdge
  * @tparam T тип данных координат точек
  *
  * @param a Указатель на первый сравниваемый объект
