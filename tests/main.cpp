@@ -41,12 +41,8 @@ int main(int argc, char* argv[]) {
   /* Сюда нужно вставить вызов набора тестов для алгоритма. */
 
   TestContourRectangles(&cli);
-<<<<<<< HEAD
   TestPresent(&cli);
-=======
   TestGrahamScan(&cli);
-
->>>>>>> upstream/main
   /* Конец вставки. */
 
   // Отправляем GET запрос для остановки сервера.
