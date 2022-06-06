@@ -41,16 +41,14 @@ int GrahamScanMethodHelper(const nlohmann::json& input, nlohmann::json* output, 
   size_t size = input.at("size");
 
   std::list<Point<T>> data;
-  Point<T> *point = new Point<T>;
   for (size_t i = 0; i < size; i++){
-    point = new (Point<T>)(input.at("data").at(0).at(i), input.at("data").at(1).at(i));
-    data.push_back(*point);
+    data.push_back(Point<T>(input.at("data").at(0).at(i), input.at("data").at(1).at(i)));
   }
   
-  Polygon<T> *P = GrahamScan<T>(data, size);
+  Polygon<T> P = GrahamScan<T>(data, size);
   
-  size = P->Size();
-  data = P->Vertices();
+  size = P.Size();
+  data = P.Vertices();
   (*output)["size"] = size;
   (*output)["type"] = type;
   

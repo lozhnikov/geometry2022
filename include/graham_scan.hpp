@@ -79,7 +79,7 @@ Polygon *GrahamScan(Point pts[], int n){
 */
 
 template<typename T>
-Polygon<T> *GrahamScan(std::list<Point<T>> pts, size_t n){
+Polygon<T> GrahamScan(std::list<Point<T>> pts, size_t n){
 
   size_t m = 0;
   if (m == n) m = n;
@@ -105,8 +105,8 @@ Polygon<T> *GrahamScan(std::list<Point<T>> pts, size_t n){
    **/
   pts.erase(imax);
   pts.sort(polarCmp<T>);
-  pts.push_front(*(new Point<T>(0, 0)));
-  pts.push_back(*(new Point<T>(0, 0)));
+  pts.push_front(Point<T>(0, 0));
+  pts.push_back(Point<T>(0, 0));
   
 //   while (pts.begin() != imax){
 //     pts.push_back(*(pts.begin()));
@@ -139,8 +139,8 @@ Polygon<T> *GrahamScan(std::list<Point<T>> pts, size_t n){
   for (itr = pts.begin(); itr != pts.end(); itr++){
     *itr = *itr + min;
   }
-  Polygon<T> *P = new (Polygon<T>)(pts);
-  return P;
+  
+  return Polygon<T>(pts);
 }
 
 }  // namespace geometry
