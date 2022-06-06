@@ -129,13 +129,11 @@ static void TestAll(httplib::Client * client) {
     }
     indicies = Triangulate(client, input);
     VerifyTriangulate(input, indicies, 10.0);
-
 }
 
 //  client нужен для отправвки тестовых запросов серверу
 void TestTriangulate(httplib::Client * client) {
     // suite для вывода красивых отчётов
     TestSuite suite("TestTriangulate");
-  
     RUN_TEST_REMOTE(suite, client, TestAll);
 }
