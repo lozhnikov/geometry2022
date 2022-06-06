@@ -10,11 +10,11 @@
 #include <nlohmann/json.hpp>
 #include "methods.hpp"
 
-using geometry::ContourRectanglesMethod;
+using geometry::GrahamScanMethod;
 
 int main(int argc, char* argv[]) {
   // Порт по-умолчанию.
-  int port = 8080;
+  int port = 7395;
 
   if (argc >= 2) {
     // Меняем порт по умолчанию, если предоставлен соответствующий
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 
 /* /ContourRectangles это адрес для запросов на поиск контура
   на сервере. */
-  svr.Post("/ContourRectangles", [&](const httplib::Request& req,
+  svr.Post("/GrahamScan", [&](const httplib::Request& req,
                                  httplib::Response& res) {
     /*
     Поле body структуры httplib::Request содержит текст запроса.
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     nlohmann::json output;
 
     /* Если метод завершился с ошибкой, то выставляем статус 400. */
-    if (ContourRectanglesMethod(input, &output) < 0)
+    if (GrahamScanMethod(input, &output) < 0)
       res.status = 400;
 
     /*

@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[]) {
   // Порт по-умолчанию.
-  int port = 8080;
+  int port = 7395;
   // Адрес сервера по-умолчанию.
   std::string host = "127.0.0.1";
 
@@ -40,14 +40,14 @@ int main(int argc, char* argv[]) {
 
   /* Сюда нужно вставить вызов набора тестов для алгоритма. */
 
-  TestContourRectangles(&cli);
+  TestGrahamScan(&cli);
 
   /* Конец вставки. */
 
   // Отправляем GET запрос для остановки сервера.
   httplib::Result res = cli.Get("/stop");
 
-  if (res->status != 200)
+  if (!res || res->status != 200)
     return -1;
 
   return TestSuite::Status();

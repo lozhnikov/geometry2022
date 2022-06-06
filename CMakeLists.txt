@@ -113,12 +113,14 @@ add_executable(
   include/contour_rectangles.hpp
   include/edge.hpp
   include/edge_impl.hpp
+  include/graham_scan.hpp
   include/orientation.hpp
   include/point.hpp
   include/point_impl.hpp
   include/polygon.hpp
   include/polygon_impl.hpp
   methods/contour_rectangles_method.cpp
+  methods/graham_scan_method.cpp
   methods/main.cpp
   methods/methods.hpp
 )
@@ -144,6 +146,7 @@ add_executable(
   include/contour_rectangles.hpp
   include/edge.hpp
   include/edge_impl.hpp
+  include/graham_scan.hpp
   include/orientation.hpp
   include/point.hpp
   include/point_impl.hpp
@@ -151,6 +154,7 @@ add_executable(
   include/polygon_impl.hpp
   tests/contour_rectangles_test.cpp
   tests/edge_test.cpp
+  tests/graham_scan_test.cpp
   tests/io.hpp
   tests/main.cpp
   tests/orientation_test.cpp

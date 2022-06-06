@@ -25,7 +25,7 @@ namespace geometry {
  * Функция запускает алгоритм сортировки вставками, используя входные данные
  * в JSON формате. Результат также выдаётся в JSON формате.
  */
-int ContourRectanglesMethod(const nlohmann::json& input,
+int GrahamScanMethod(const nlohmann::json& input,
                             nlohmann::json* output);
 
 
