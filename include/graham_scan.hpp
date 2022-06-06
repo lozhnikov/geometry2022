@@ -4,7 +4,7 @@
  *
  * Реализация алгоритма построения выпуклой
  * оболочки методом обхода Грэхема.
- */
+ **/
 
 #ifndef INCLUDE_GRAHAM_SCAN_HPP_
 #define INCLUDE_GRAHAM_SCAN_HPP_
@@ -24,7 +24,9 @@ class Point;
 template<typename T, typename Container>
 class Polygon;
 
-
+/**
+ * Функция сравнения вершин по их углу
+ **/
 template<typename T>
 int polarCmp(Point<T> p, Point<T> q){
   T precision = T(0.001);
@@ -82,15 +84,25 @@ Polygon<T> *GrahamScan(std::list<Point<T>> pts, size_t n){
   size_t m = 0;
   if (m == n) m = n;
   
+  /**
+   * Ищем самую нижнюю левую вершину, чтобы взять её за центр координат
+   **/
   auto imax = pts.begin();
   for (auto itr = pts.begin(); itr != pts.end(); itr++){
     if (itr->Y() < imax->Y() || (std::fabs(itr->Y() - imax->Y()) < 0.01 && itr->X() > imax->X())) imax = itr;
   }
+  
+  /**
+   * Сдвигаем все вершины к новому центру
+   **/
   Point<T> min = *imax;
   for (auto itr = pts.begin(); itr != pts.end(); itr++){
     *itr = *itr - min;
   }
   
+  /**
+   * Сортируем порядок вершин относительно их угла, начало координат добавляем и в начало и в конец
+   **/
   pts.erase(imax);
   pts.sort(polarCmp<T>);
   pts.push_front(*(new Point<T>(0, 0)));
@@ -101,6 +113,9 @@ Polygon<T> *GrahamScan(std::list<Point<T>> pts, size_t n){
 //     pts.pop_front();
 //   }
   
+  /**
+   * Удаляем те вершины угол которых при обходе уменьшается, а не увеличивается
+   **/
   auto itr = pts.begin();
   auto ipr = pts.begin();
   itr++;
@@ -117,6 +132,9 @@ Polygon<T> *GrahamScan(std::list<Point<T>> pts, size_t n){
     }
   }
 
+  /**
+   * Возвращаем в старую систему координат
+   **/
   pts.pop_back();
   for (itr = pts.begin(); itr != pts.end(); itr++){
     *itr = *itr + min;
