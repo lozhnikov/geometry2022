@@ -34,6 +34,7 @@ void TestOrientation();
 
 void TestContourRectangles(httplib::Client* cli);
 void TestTriangulate(httplib::Client * client);
+void TestGrahamScan(httplib::Client* cli);
 
 /* Конец вставки. */
 

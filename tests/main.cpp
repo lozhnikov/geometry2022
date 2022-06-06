@@ -42,13 +42,15 @@ int main(int argc, char* argv[]) {
 
   TestContourRectangles(&cli);
   TestTriangulate(&cli);
+  TestGrahamScan(&cli);
+
 
   /* Конец вставки. */
 
   // Отправляем GET запрос для остановки сервера.
   httplib::Result res = cli.Get("/stop");
 
-  if (res->status != 200)
+  if (!res || res->status != 200)
     return -1;
 
   return TestSuite::Status();
