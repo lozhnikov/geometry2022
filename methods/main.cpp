@@ -14,7 +14,7 @@ using geometry::GrahamScanMethod;
 
 int main(int argc, char* argv[]) {
   // Порт по-умолчанию.
-  int port = 7395;
+  int port = 8080;
 
   if (argc >= 2) {
     // Меняем порт по умолчанию, если предоставлен соответствующий

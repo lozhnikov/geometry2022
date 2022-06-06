@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[]) {
   // Порт по-умолчанию.
-  int port = 7395;
+  int port = 8080;
   // Адрес сервера по-умолчанию.
   std::string host = "127.0.0.1";
 
