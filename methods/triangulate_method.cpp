@@ -1,8 +1,21 @@
+/**
+ * @file methods/contour_rectangles_method.cpp
+ * @author Ivan Semochkin
+ *
+ * Файл содержит функцию, которая вызывает алгоритм Делоне.
+ * Функция принимает и возвращает данные в JSON
+ * формате.
+ */
 #include "methods.hpp"
 #include "triangulate.hpp"
 
 namespace geometry {
     std::vector <Point<double>>
+    /**
+    * @brief Десериализатор точек
+    * @param j входная строка формата JSON
+    * @return строка
+    */
     DeserializePointVector(const nlohmann::json & j) {
         std::vector <Point<double>> result;
         double last_coord = 0;
@@ -19,6 +32,11 @@ namespace geometry {
         }
         return result;
     }
+    /**
+    * @brief Сериализатор индексов
+    * @param v входная строка
+    * Выходная строка формата JSON
+    */
     void SerializeIndexVector(const std::vector<int> & v,
     nlohmann::json * output) {
         *output = nlohmann::json::array();

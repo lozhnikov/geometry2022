@@ -1,3 +1,9 @@
+/**
+ * @file tests/contour_rectangles_test.cpp
+ * @author Ivan Semochkin
+ *
+ * Реализация набора тестов для алгоритма Делоне.
+ */
 #include <random>
 #include <point.hpp>
 #include <nlohmann/json.hpp>
@@ -5,7 +11,11 @@
 #include "./test.hpp"
 using std::vector;
 using geometry::Point;
-
+/**
+* @brief Сериализатор точек
+* @param v входная строка
+* @return строка формата JSON
+*/
 nlohmann::json SerializePointVector(const vector<Point<double>> & v) {
     auto array = nlohmann::json::array();  // массив формата json
     for (auto & p : v) {
@@ -16,6 +26,11 @@ nlohmann::json SerializePointVector(const vector<Point<double>> & v) {
     }
   return array;
 }
+/**
+* @brief Десериализатор индексов
+* @param j входная строка формата JSON
+* @return строка
+*/
 vector<int> DeserializeIndexVector(const nlohmann::json & j) {
   vector<int> result;
     for (auto & coord : j) {
@@ -24,7 +39,11 @@ vector<int> DeserializeIndexVector(const nlohmann::json & j) {
     }
     return result;
 }
-
+/**
+* @brief Отправление на сервер - получение с сервера
+* @param client  Указатель на HTTP клиент
+* @param v исходный двумерный вектор
+*/
 std::vector<int> Triangulate(httplib::Client * client,
 const std::vector<Point<double>> & v) {
     nlohmann::json input = SerializePointVector(v);
@@ -36,7 +55,10 @@ const std::vector<Point<double>> & v) {
     nlohmann::json result_json = nlohmann::json::parse(result->body);
     return DeserializeIndexVector(result_json);
 }
-
+/**
+* @brief Тесты
+*
+*/
 void VerifyTriangulate(const vector<Point<double>> & input,
 const vector<int> & indicies, double area) {
     // удостоверяемся, что, например, число индексов корректно, то есть 3k
@@ -83,7 +105,10 @@ const vector<int> & indicies, double area) {
     // проверяем площадь
     REQUIRE_CLOSE(sum, area, 1.0E-5);
 }
-
+/**
+* @brief Создание точек
+*
+*/
 static void TestAll(httplib::Client * client) {
     // площадь = 1,5
     vector<Point<double>> input;
@@ -131,7 +156,7 @@ static void TestAll(httplib::Client * client) {
     VerifyTriangulate(input, indicies, 10.0);
 }
 
-//  client нужен для отправвки тестовых запросов серверу
+//  client для отправвки тестовых запросов серверу
 void TestTriangulate(httplib::Client * client) {
     // suite для вывода красивых отчётов
     TestSuite suite("TestTriangulate");

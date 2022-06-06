@@ -1,3 +1,9 @@
+/**
+ * @file include/triangulate.hpp
+ * @author Ivan Semochkin
+ *
+ * Реализация алгоритма Делоне.
+ */
 #pragma once
 #include <vector>
 #include <utility>
@@ -48,6 +54,12 @@ namespace geometry {
         if (a.Destination() > b.Destination()) return true;
         return true;
     }
+    /**
+    * @brief Поиск сопряженной точки для ребра
+    * @param T тип данных элеменов
+    * @param v двумерный вектор точек
+    * @return лучшую сопряженную точку
+    */
     template<class T> bool Mate(const Edge<T> & e,
     const std::vector<Point<T>> & v,
     Point<T> * p) {
@@ -74,6 +86,12 @@ namespace geometry {
             return false;
         }
     }
+    /**
+    * @brief Поиск первого ребра
+    * @param T тип данных элеменов
+    * @param v двумерный вектор точек
+    * @return первое ребро
+    */
     template<class T> Edge<T> HullEdge(std::vector<Point<T>> * v) {
         size_t m = 0;
         for (size_t i = 1; i < v->size(); i++)
@@ -88,6 +106,11 @@ namespace geometry {
         }
         return Edge<T>((*v)[0], (*v)[m]);
     }
+    /**
+    * @brief Операция поиска в словаре
+    * @param T тип данных элеменов
+    * @param frontier словарь
+    */
     template<class T> int SetFind(const std::vector<T> * frontier,
     const T & t) {
         for (size_t i = 0; i < frontier->size(); i++)
@@ -95,6 +118,11 @@ namespace geometry {
                 return static_cast<int>(i);
         return -1;
     }
+    /**
+    * @brief Операция добавления в словарь
+    * @param T тип данных элеменов
+    * @param frontier словарь
+    */
     template<class T> void SetAdd(std::vector<T> * frontier, const T & t) {
         auto iter = frontier->begin();
         for (size_t i = 0; i < frontier->size(); i++)
@@ -105,6 +133,13 @@ namespace geometry {
         }
         frontier->push_back(t);
     }
+    /**
+    * @brief Изменение словаря
+    * @param T тип данных элеменов
+    * @param frontier словарь
+    * @param первая вершина ребра
+    * @param вторая вершина ребра
+    */
     template<class T> void UpdateFrontier(std::vector<Edge<T>> * frontier,
     const Point<T> & a, const Point<T> & b) {
         Edge<T> e(a, b);
@@ -116,6 +151,12 @@ namespace geometry {
             SetAdd(frontier, e);
         }
     }
+    /**
+    * @brief Формирование индексов
+    * @param T тип данных элеменов
+    * @param v двумерный вектор точек
+    * @return индекс
+    */
     template<class T> int PointIndex(const std::vector<Point<T>> & v,
     const Point<T> & p) {
         for (size_t i = 0; i < v.size(); i++)
@@ -123,6 +164,12 @@ namespace geometry {
                 return static_cast<int>(i);
         throw p;
     }
+    /**
+    * @brief Триангулирование
+    * @param T тип данных элеменов
+    * @param v двумерный вектор точек
+    * @return массив индексов вершин треугольников
+    */
     template<class T> std::vector<int>
     Triangulate(const std::vector<Point<T>> & v) {
         std::vector<Point<T>> vc = v;
