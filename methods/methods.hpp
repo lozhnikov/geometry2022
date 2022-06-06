@@ -27,6 +27,8 @@ namespace geometry {
  */
 int ContourRectanglesMethod(const nlohmann::json& input,
                             nlohmann::json* output);
+int GrahamScanMethod(const nlohmann::json& input,
+                            nlohmann::json* output);
 
 
 /* Конец вставки. */
